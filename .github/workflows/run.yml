@@ -13,7 +13,7 @@ jobs:
           POSTGRES_PASSWORD: password
           POSTGRES_DB: testdb
         options: >-
-          --health-cmd pg_isready -U postgres -d testdb
+          --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -28,5 +28,5 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: |
-          ls -al
           go run src/main.go
+          ls -al
