@@ -30,7 +30,5 @@ jobs:
     steps:
       - name: checkout repository
         uses: actions/checkout@v3
-      - name: go module setup
-        run: cd src && go mod tidy
-      - name: check DB operation result
-        run: go run main.go
+      - name: go db operation
+        run: cd src && go mod tidy && go run main.go
