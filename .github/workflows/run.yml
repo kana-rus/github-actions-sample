@@ -12,6 +12,8 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
           POSTGRES_DB: testdb
+        volumes:
+          -  ./migrate/*.sql:/docker-entrypoint-initdb.d/
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -27,6 +29,4 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - run: |
-          go run src/main.go
-          ls -al
+      - run: go run src/main.go
