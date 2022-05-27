@@ -3,37 +3,45 @@ on: [push]
 jobs:
   sample-lint:
     runs-on: ubuntu-latest
-    # services:
-    #   postgres:
-    #     image: postgres:14.2
-    #     ports:
-    #       - 5432:5432
-    #     env:
-    #       POSTGRES_USER: postgres
-    #       POSTGRES_PASSWORD: password
-    #       POSTGRES_DB: testdb
-    #     volumes:
-    #       -  migrate:/docker-entrypoint-initdb.d
-    #     options: >-
-    #       --health-cmd pg_isready
-    #       --health-interval 10s
-    #       --health-timeout 5s
-    #       --health-retries 5
-    container:
-      image: golang:1.18
-      env:
-        DB_USER: postgres
-        DB_PASSWORD: password
-        DB_HOST: db
-        DB_DATABASE: testdb
+    services:
+      postgres:
+        image: postgres:14.2
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: testdb
+        volumes:
+          -  migrate:/docker-entrypoint-initdb.d
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    # container:
+    #   image: golang:1.18
+    #   env:
+    #     DB_USER: postgres
+    #     DB_PASSWORD: password
+    #     DB_HOST: db
+    #     DB_DATABASE: testdb
 
     steps:
       - name: checkout repository
         uses: actions/checkout@v3
 
       - name: setup postgres
-        shell: bash
         run: docker-compose up -d
 
       - name: go db operation
-        run: cd src && go mod tidy && go run main.go
+        run: |
+          cd src
+          go mod tidy
+          go run main.go
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432 # デフォルトのPostgreSQLポート
