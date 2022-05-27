@@ -28,5 +28,9 @@ jobs:
         DB_DATABASE: testdb
 
     steps:
-      - uses: actions/checkout@v3
-      - run: go run src/main.go
+      - name: checkout repository
+        uses: actions/checkout@v3
+      - name: go module setup
+        run: cd src && go mod tidy
+      - name: check DB operation result
+        run: go run src/main.go
