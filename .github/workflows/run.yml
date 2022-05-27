@@ -13,7 +13,7 @@ jobs:
           POSTGRES_PASSWORD: password
           POSTGRES_DB: testdb
         volumes:
-          -  /migrate:/docker-entrypoint-initdb.d
+          -  migrate:/docker-entrypoint-initdb.d
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
