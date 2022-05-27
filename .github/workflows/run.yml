@@ -1,14 +1,33 @@
 name: learn-github-actions
 on: [push]
 jobs:
-  check-bats-version:
+  sample-lint:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:14.2
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: parkinglot
+        option: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    container:
+      image: golang:1.18
+      env:
+        DB_USER: postgres
+        DB_PASSWORD: password
+        DB_HOST: db
+        DB_DATABASE: parkinglot
+
     steps:
       - run: ls -al
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: |
           ls -al
-          cd .github
-          ls -al
-          cd workflows
-          ls -al
+          go run src/main.go
