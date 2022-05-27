@@ -12,7 +12,7 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
           POSTGRES_DB: parkinglot
-        option: >-
+        options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
