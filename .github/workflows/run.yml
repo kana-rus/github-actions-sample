@@ -32,11 +32,14 @@ jobs:
       - name: checkout repository
         uses: actions/checkout@v3
 
+      - run: pwd && ls -al && cd src/
+
       - name: setup postgres
-        run: docker-compose up -d
+        run: pwd && docker-compose up -d
 
       - name: go db operation
         run: |
+          pwd && ls -al
           cd src
           go mod tidy
           go run main.go
