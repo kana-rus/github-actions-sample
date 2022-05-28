@@ -10,8 +10,6 @@ services:
     build:
       context: .
       dockerfile: ./postgres/Dockerfile
-      args:
-        - DB_LANG=ja_JP
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d testdb -U postgres"]
       interval: 10s
