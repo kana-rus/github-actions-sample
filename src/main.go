@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	HOST     = "postgres"
+	HOST     = "localhost"
 	USER     = "appuser"
 	PASSWORD = "password"
 	DB_NAME  = "testdb"
